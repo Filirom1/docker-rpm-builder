@@ -7,6 +7,18 @@ cp /src/yum.conf /etc/ || echo ""
 
 cp /src/*.repo /etc/yum.repos.d/ || echo ""
 
+cat > /etc/yum.repos.d/local.repo << EOF
+[local]
+name=local
+baseurl=file:///src/RPMS
+enabled=1
+gpgcheck=0
+protect=1
+EOF
+
+createrepo /src/RPMS
+
+
 SPEC=$(find /src -maxdepth 1 -name '*.spec' -print -quit)
 mkdir -p /docker-rpm-build-root/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
 
