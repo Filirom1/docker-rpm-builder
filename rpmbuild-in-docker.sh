@@ -36,6 +36,29 @@ SRPM=$(find /docker-rpm-build-root/SRPMS/ -maxdepth 1 -name '*.src.rpm' -print -
 
 ls -lh $SRPM
 yum-builddep "$SRPM" -y --nogpgcheck
-rpmbuild --rebuild --define="_topdir /docker-rpm-build-root" "$SRPM"
+
+
+if [[ $SRPM == *nodejs010* ]]; then
+  yum install -y nodejs010-build nodejs010-scldevel
+  rpmbuild --rebuild --define="_topdir /docker-rpm-build-root" --define="scl nodejs010" "$SRPM"
+elif [[ $SRPM == *ruby193* ]]; then
+  yum install -y ruby193-build ruby193-scldevel
+  rpmbuild --rebuild --define="_topdir /docker-rpm-build-root" --define="scl ruby193" "$SRPM"
+elif [[ $SRPM == *postgresql92* ]]; then
+  yum install -y postgresql92-build postgresql92-scldevel
+  rpmbuild --rebuild --define="_topdir /docker-rpm-build-root" --define="scl postgresql92" "$SRPM"
+elif [[ $SRPM == *python27* ]]; then
+  yum install -y python27-build python27-scldevel
+  rpmbuild --rebuild --define="_topdir /docker-rpm-build-root" --define="scl python27" "$SRPM"
+elif [[ $SRPM == *python33* ]]; then
+  yum install -y python33-build python33-scldevel
+  rpmbuild --rebuild --define="_topdir /docker-rpm-build-root" --define="scl python33" "$SRPM"
+elif [[ $SRPM == *php54* ]]; then
+  yum install -y php54-build php54-scldevel
+  rpmbuild --rebuild --define="_topdir /docker-rpm-build-root" --define="scl php54" "$SRPM"
+else
+  rpmbuild --rebuild --define="_topdir /docker-rpm-build-root" "$SRPM"
+fi
+
 cp -r /docker-rpm-build-root/RPMS /src
 echo "Done"
