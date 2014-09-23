@@ -32,6 +32,10 @@ until built==0 do
     !success.include? filename
   end
 
+  puts "The following SRPM will be built:".green
+  puts srpm
+  puts
+
   #for each file not in the success list
   srpm.each do |filename|
     puts "Build #{filename}".green

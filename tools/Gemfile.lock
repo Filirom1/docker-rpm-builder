@@ -1,0 +1,16 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    colors (0.0.7)
+    fileutils (0.7)
+      rmagick (>= 2.13.1)
+    json (1.8.1)
+    rmagick (2.13.3)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  colors
+  fileutils
+  json
