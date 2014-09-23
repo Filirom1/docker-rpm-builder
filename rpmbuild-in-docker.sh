@@ -40,10 +40,10 @@ ls -lh $SRPM
 yum-builddep "$SRPM" -y --nogpgcheck
 
 if [[ $SRPM == *nodejs010* ]]; then
-  yum install -y nodejs010-build nodejs010-scldevel
+  yum install -y nodejs010-build nodejs010-scldevel v8314-build v8314-scldevel
   rpmbuild --rebuild --define="_topdir /docker-rpm-build-root" --define="scl nodejs010" "$SRPM"
 elif [[ $SRPM == *ruby193* ]]; then
-  yum install -y ruby193-build ruby193-scldevel
+  yum install -y ruby193-build ruby193-scldevel nodejs ruby193-v8-devel
   rpmbuild --rebuild --define="_topdir /docker-rpm-build-root" --define="scl ruby193" "$SRPM"
 elif [[ $SRPM == *postgresql92* ]]; then
   yum install -y postgresql92-build postgresql92-scldevel
