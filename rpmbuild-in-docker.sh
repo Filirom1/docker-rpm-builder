@@ -14,10 +14,12 @@ baseurl=file:///src/RPMS
 enabled=1
 gpgcheck=0
 protect=1
+priority=1
 EOF
 
 createrepo /src/RPMS
-
+yum install yum-plugin-priorities -y
+yum update -y
 
 SPEC=$(find /src -maxdepth 1 -name '*.spec' -print -quit)
 mkdir -p /docker-rpm-build-root/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
@@ -36,7 +38,6 @@ SRPM=$(find /docker-rpm-build-root/SRPMS/ -maxdepth 1 -name '*.src.rpm' -print -
 
 ls -lh $SRPM
 yum-builddep "$SRPM" -y --nogpgcheck
-
 
 if [[ $SRPM == *nodejs010* ]]; then
   yum install -y nodejs010-build nodejs010-scldevel
